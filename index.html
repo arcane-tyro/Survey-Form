@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <script type='text/javascript'>
+        function addFields() {
+            // Number of inputs to create
+            var number = document.getElementById("entries").value;
+            // Container <div> where dynamic content will be placed
+            var container = document.getElementById("vegetable-details");
+            // Clear previous contents of the container
+            while (container.hasChildNodes()) {
+                container.removeChild(container.lastChild);
+            }
+            for (i = 0; i < number; i++) {
+                // Append a node with a random text
+                container.appendChild(document.createTextNode("Vegetable " + (i + 1)));
+                // Create an <input> element, set its type and name attributes
+                var input = document.createElement("input");
+                input.type = "text";
+                input.name = "vegetable" + (i + 1);
+                input.class = "form-control";
+                container.appendChild(input);
+
+                container.appendChild(document.createTextNode("Price " + (i + 1)));
+                var input = document.createElement("input");
+                input.type = "text";
+                input.name = "price" + (i + 1);
+                input.class = "form-control";
+                container.appendChild(input);
+
+                container.appendChild(document.createTextNode("Qty " + (i + 1)));
+                var input = document.createElement("input");
+                input.type = "text";
+                input.name = "Qty" + (i + 1);
+                input.class = "form-control";
+                container.appendChild(input);
+                // Append a line break 
+                container.appendChild(document.createElement("br"));
+            }
+        }
+    </script>
+    <title>Survey Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+</head>
+
+<body>
+    <div class="container py-5">
+
+        <div class="text-center fw-bold mb-3">
+            <h1>Vegetable Cost Survey Form</h1>
+        </div>
+        <form method="post" autocomplete="off" name="survey-sheet">
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" name="location" class="form-control" placeholder="Enter your location" />
+            </div>
+
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" name="name" class="form-control" placeholder="Enter your name" />
+            </div>
+            <div class="mb-3">
+                <label for="date" class="form-label">Date of Purchase</label>
+                <input type="date" name="date" class="form-control" placeholder="Enter date of purchase" />
+            </div>
+
+            Number of Vegetables: (max. 10) <input type="text" id="entries" name="member" value=""><br />
+            <a href="#" id="filldetails" onclick="addFields()">Fill Details</a>
+            <div id="vegetable-details"> </div>
+
+            <br>
+            <div class="mb3">
+                <button type="submit" class="btn btn-primary" name="submit" value="Send message">Submit</button>
+                <button class="btn btn-danger" type="reset">Reset the form!</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzaTlaHUSMZuk2kMoYFS2aREZvuGUiEexyBCsGgAmwOPs2-UVzh8mhXCgiMo477aKKW/exec'
+        const form = document.forms['survey-sheet']
+
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                .then(response => console.log('Success!', response))
+                .catch(error => console.error('Error!', error.message))
+        })
+    </script>
+</body>
+
+</html>
